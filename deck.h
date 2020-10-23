@@ -26,7 +26,7 @@ public:
 	deck();
 
 	//Destructor 
-	//~deck();
+	~deck();
 
 	// Overload Operators
 	friend ostream& operator<<(ostream& os, const deck& d);
@@ -34,7 +34,7 @@ public:
 	// Shuffle function
 	void shuffle();
 
-	node<card>* deal();
+	card deal();
 
 	void replace(card replace_card);
 };
@@ -64,10 +64,10 @@ deck::deck()
 	}
 }
 
-/*deck::~deck()
+deck::~deck()
 {
-	delete deck;
-}*/
+	delete firstcard;
+}
 
 // Overloaded << operator
 ostream& operator<<(ostream& os, const deck& d)
@@ -86,7 +86,6 @@ ostream& operator<<(ostream& os, const deck& d)
 // Shuffles the deck
 void deck::shuffle()
 {
-
 	/*
 	// Create temporary pointers for the last card and a random card to split the deck
 	node<card>* last_card = firstcard;
@@ -124,9 +123,9 @@ void deck::shuffle()
 	*/
 }
 
-node<card>* deck::deal()
+card deck::deal()
 {
-	node<card>* card_to_deal = firstcard;
+	card card_to_deal = firstcard->nodeValue;
 	firstcard = firstcard->next;
 	return card_to_deal;
 }
