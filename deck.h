@@ -1,3 +1,12 @@
+/*
+Alex Negulescu		negulescu.a@northeastern.edu
+Ethan Chen			chen.eth@northeastern.edu
+This file includes the deck class which creates the full deck of cards.
+This file uses the d_node.h file and the card.h file to create a deck
+using nodes. File also includes an overloaded operator function that
+allows printing of the entire deck
+*/
+
 #ifndef DECK_H
 #define DECK_H
 
@@ -16,14 +25,16 @@ public:
 	// Default contructor
 	deck();
 
+	//Destructor 
+	//~deck();
+
 	// Overload Operators
 	friend ostream& operator<<(ostream& os, const deck& d);
 
 	// Shuffle function
 	void shuffle();
 
-	// Print first card
-	void printFirstCard();
+	node<card>* deal();
 };
 
 // Implementation
@@ -32,8 +43,10 @@ deck::deck()
 {
 	node<card> *current = NULL;
 
+	// Loops through each suit
 	for (int s = 3; s >= 0; s--)
 	{
+		// Loops through each value
 		for (int v = 13; v >= 1; v--)
 		{
 			string suit;
@@ -42,12 +55,19 @@ deck::deck()
 			else if (s == 2) suit = "heart";
 			else if (s == 3) suit = "diamond";
 
+			// Starts from the back and creates a linked list of the deck
 			firstcard = new node<card>(card(v, suit), current);
 			current = firstcard;
 		}
 	}
 }
 
+/*deck::~deck()
+{
+	delete deck;
+}*/
+
+// Overloaded << operator
 ostream& operator<<(ostream& os, const deck& d)
 {
 	node<card>* current = d.firstcard;
@@ -61,38 +81,48 @@ ostream& operator<<(ostream& os, const deck& d)
 	return os;
 }
 
+// Shuffles the deck
 void deck::shuffle()
 {
+	// Create temporary pointers for the last card and a random card to split the deck
 	node<card>* last_card = firstcard;
-	node<card>* split_card = firstcard;
+	node<card>* split_card;
 
+	// Finds the last card
 	while (last_card->next != NULL)
 	{
 		last_card = last_card->next;
 	}
 
-	int split_size = rand() % 52;
-	cout << split_size << endl;
-
-	for (int x = 0; x < split_size; x++)
+	for (int x = 0; x < 10; x++)
 	{
-		split_card = split_card->next;
+		split_card = firstcard;
+
+		// Randomly pics card in middle of deck
+		int split_size = rand() % 52;
+
+		// Gets the pointer for that card
+		for (int x = 0; x < split_size; x++)
+		{
+			split_card = split_card->next;
+		}
+
+		// Points the last card to the first card
+		last_card->next = firstcard;
+		// The first card is now the split card's next pointer
+		firstcard = split_card->next;
+		// The split card is now the last card so set the next to NULL
+		split_card->next = NULL;
+
+		// Last card pointer is now the split card
+		last_card = split_card;
 	}
-
-	cout << "SPLIT CARD: ";
-	cout << split_card->nodeValue << endl;
-
-	last_card->next = firstcard;
-	firstcard = split_card->next;
-	split_card->next = NULL;
-	split_card = firstcard;
-	last_card = firstcard;
 }
 
-
-void deck::printFirstCard()
+node<card>* deck::deal()
 {
-	cout << firstcard->nodeValue << endl;
+	node<card>* card_to_deal = firstcard;
+	return card_to_deal;
 }
 
 #endif // Deck Class
