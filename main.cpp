@@ -29,5 +29,11 @@ int main()
 	cout << test_deck;
 
 	node<card>*card_to_deal = test_deck.deal();
-	cout << card_to_deal;
+	cout << "Dealt Card: ";
+	cout << card_to_deal->nodeValue << endl;
+
+	test_deck.replace(card(1, "spade"));
+
+	cout << "Testing Replace function" << endl;
+	cout << test_deck;
 }

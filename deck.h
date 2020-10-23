@@ -35,6 +35,8 @@ public:
 	void shuffle();
 
 	node<card>* deal();
+
+	void replace(card replace_card);
 };
 
 // Implementation
@@ -84,6 +86,8 @@ ostream& operator<<(ostream& os, const deck& d)
 // Shuffles the deck
 void deck::shuffle()
 {
+
+	/*
 	// Create temporary pointers for the last card and a random card to split the deck
 	node<card>* last_card = firstcard;
 	node<card>* split_card;
@@ -117,12 +121,31 @@ void deck::shuffle()
 		// Last card pointer is now the split card
 		last_card = split_card;
 	}
+	*/
 }
 
 node<card>* deck::deal()
 {
 	node<card>* card_to_deal = firstcard;
+	firstcard = firstcard->next;
 	return card_to_deal;
 }
+
+void deck::replace(card replace_card)
+{
+	node<card>* last_card = firstcard;
+
+	while (last_card->next != NULL)
+	{
+		last_card = last_card->next;
+	}
+
+	node<card> *new_last_node = new node<card>;
+	new_last_node->nodeValue = replace_card;
+	new_last_node->next = NULL;
+	last_card->next = new_last_node;
+
+}
+
 
 #endif // Deck Class
