@@ -1,3 +1,10 @@
+/*
+Alex Negulescu      negulescu.a@northeastern.edu
+Ethan Chen			chen.eth@northeastern.edu
+This is the main file where the game is played
+*/
+
+
 #include <iostream>
 #include <time.h>
 #include "card.h"
@@ -16,6 +23,11 @@ int main()
 	cout << test_deck << endl;
 
 	cout << "SHUFFLING DECK" << endl;
+
 	test_deck.shuffle();
+
 	cout << test_deck;
+
+	node<card>*card_to_deal = test_deck.deal();
+	cout << card_to_deal;
 }
