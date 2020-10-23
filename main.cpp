@@ -104,7 +104,7 @@ void playGame()
 		}
 	}
 	
-	
+	cout << "FINAL SCORE: " << score << endl;
 	
 }
 
