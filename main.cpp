@@ -32,12 +32,23 @@ void playGame()
 	node<card>* dealt_card = new node<card>(game_deck.deal(), NULL);
 	node<card>* current = dealt_card;
 	
-	for (int x = 0; x < 23; x++)
+	for (int x = 0; x < 22; x++)
 	{
 		node<card>* new_node = new node<card>(game_deck.deal(), NULL);
 		current->next = new_node;
 		current = current->next;
 	}
+
+	cout << "Printing top 24 cards: " << endl;
+	node<card>* print_card = dealt_card;
+	while (print_card != NULL)
+	{
+		cout << print_card->nodeValue << endl;
+		print_card = print_card->next;
+	}
+
+	cout << "Printing rest of deck: " << endl;
+	cout << game_deck;
 
 
 	while (running)
@@ -58,6 +69,7 @@ void playGame()
 		card picked_card = picked_node->nodeValue;
 
 		cout << "Your card is: " << picked_card << endl;
+		cards_left--;
 
 		if (picked_card.getValue() == 2 || picked_card.getValue() == 3 || picked_card.getValue() == 4 || picked_card.getValue() == 5 || picked_card.getValue() == 6)
 		{
